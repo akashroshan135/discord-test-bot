@@ -1,10 +1,19 @@
 import discord
 from discord.ext import commands
 
-client = commands.Bot(command_prefix = '.')
+bot = commands.Bot(command_prefix = '.')
 
-@client.event
+# runs when the bot is running
+@bot.event
 async def on_ready():
-    print('bot is ready')
+    print('I am ready!')
 
-client.run('NzEyNTY3MjEzMjIzMDUxMzM1.XsTcWg.1BKJ23Xq0us_FPLPQUVnrfjpOK4')
+@bot.event
+async def on_member_join(member):
+    print(f'{member} has joined')
+
+@bot.event
+async def on_member_remove(member):
+    print(f'{member} has been yeeted')
+
+bot.run('NzEyNTY3MjEzMjIzMDUxMzM1.XsTcWg.1BKJ23Xq0us_FPLPQUVnrfjpOK4')
