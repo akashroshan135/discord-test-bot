@@ -16,4 +16,8 @@ async def on_member_join(member):
 async def on_member_remove(member):
     print(f'{member} has been yeeted')
 
+@bot.command()
+async def ping(context):
+    await context.send('Pong!')
+
 bot.run('NzEyNTY3MjEzMjIzMDUxMzM1.XsTcWg.1BKJ23Xq0us_FPLPQUVnrfjpOK4')
