@@ -1,14 +1,13 @@
 # imports dotenv plugin to load environment variables
 import os
 from dotenv import load_dotenv
+# loads the environment variables
+load_dotenv()
+token = os.getenv('discord_token')
 
 # imports discord commands
 import discord, random
 from discord.ext import commands
-
-# loads the environment variables
-load_dotenv()
-token = os.getenv('discord_token')
 
 # prefix to use the bot
 bot = commands.Bot(command_prefix = '')
@@ -32,6 +31,7 @@ async def on_member_join(member):
 async def on_member_remove(member):
     print(f'{member} has been yeeted')
 
+
 # simple message replies
 @bot.command()
 async def ping(context):
@@ -45,6 +45,21 @@ async def ding(context):
 async def king(context):
     await context.send('Kong!')
 
+
+# random message replies
+@bot.command(name='test')
+async def bot_msg(context):
+    test_data = [
+        'west',
+        'east',
+        'north',
+        'boom',
+        "Whomst'd've",
+    ]
+    response = random.choice(test_data)
+    await context.send(response)
+
+# random message replies 
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
@@ -59,6 +74,7 @@ async def on_message(message):
     if message.content == 'bot':
         response = random.choice(test_data)
         await message.channel.send(response)
+    await bot.process_commands(message)
 
 
 bot.run(token)
