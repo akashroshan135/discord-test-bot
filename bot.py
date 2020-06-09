@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 # imports discord commands
-import discord
+import discord, random
 from discord.ext import commands
 
 # loads the environment variables
@@ -44,5 +44,21 @@ async def ding(context):
 @bot.command()
 async def king(context):
     await context.send('Kong!')
+
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+    test_data = [
+        'this server is crap',
+        'thing BAD',
+        '#hustleCulture',
+        'wow such empty',
+        "Whomst'd've have summoned me",
+    ]
+    if message.content == 'bot':
+        response = random.choice(test_data)
+        await message.channel.send(response)
+
 
 bot.run(token)
