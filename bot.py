@@ -21,10 +21,6 @@ async def on_ready():
 @bot.event
 async def on_member_join(member):
     print(f'{member} has joined')
-    await member.create_dm()
-    await member.dm_channel.send(
-        f"Sup {member.name}, if you're seeing this message then it worked"
-    )
 
 # terminal message on member remove
 @bot.event
