@@ -55,7 +55,7 @@ async def bot_msg(context):
     response = random.choice(test_data)
     await context.send(response)
 
-# random message replies 
+# random message replies. Works when the keyword is present in any message
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
@@ -67,10 +67,9 @@ async def on_message(message):
         'wow such empty',
         "Whomst'd've have summoned me",
     ]
-    if message.content == 'bot':
+    if 'bot' in message.content.lower():
         response = random.choice(test_data)
         await message.channel.send(response)
-    await bot.process_commands(message)
 
 
 bot.run(token)
