@@ -10,43 +10,44 @@ import discord, random
 from discord.ext import commands
 
 # prefix to use the bot
-bot = commands.Bot(command_prefix = '.')
+client = commands.Bot(command_prefix = '.')
 
 
 # runs when the bot is running
-@bot.event
+@client.event
 async def on_ready():
     print('Bot is ready to roll!')
 
 
 # terminal message on member join
-@bot.event
+@client.event
 async def on_member_join(member):
     print(f'{member} has joined')
+    #await channel.send(f'{member} has entered hell!')
 
 # terminal message on member remove
-@bot.event
-async def on_member_remove(member, context):
+@client.event
+async def on_member_remove(member):
     print(f'{member} got yeeted!')
-    await context.send(f'{member} got yeeted!')
+    #await channel.send(f'{member} got yeeted!')
 
 
 # simple message replies
-@bot.command()
+@client.command()
 async def ding(context):
     await context.send('Dong!')
 
-@bot.command()
+@client.command()
 async def king(context):
     await context.send('Kong!')
 
-@bot.command()
+@client.command()
 async def ping(context):
-    await context.send(f'Bot ping is {round(bot.latency * 1000)}ms!')
+    await context.send(f'Bot ping is {round(client.latency * 1000)}ms!')
 
 
 # random message replies (8ball)
-@bot.command(name='8ball')
+@client.command(name='8ball')
 async def _8ball(context, *, question):
     response_data = [
         'It is certain.',
@@ -75,7 +76,7 @@ async def _8ball(context, *, question):
 
 
 # deletes messages
-@bot.command()
+@client.command()
 async def clear(context, amount=1):
     await context.channel.purge(limit=amount+1)
 
@@ -83,9 +84,9 @@ async def clear(context, amount=1):
 # random message replies. Works when the keyword is present in any message
 # BUG: other commands stop working.
 """
-@bot.event
+@client.event
 async def on_message(message):
-    if message.author == bot.user:
+    if message.author == client.user:
         return
     test_data = [
         'this server is crap',
@@ -99,4 +100,4 @@ async def on_message(message):
         await message.channel.send(response)
 """
 
-bot.run(token)
+client.run(token)
