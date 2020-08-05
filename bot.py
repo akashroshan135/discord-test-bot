@@ -12,10 +12,12 @@ from discord.ext import commands
 # prefix to use the bot
 bot = commands.Bot(command_prefix = '.')
 
+
 # runs when the bot is running
 @bot.event
 async def on_ready():
     print('Bot is ready to roll!')
+
 
 # terminal message on member join
 @bot.event
@@ -70,6 +72,13 @@ async def _8ball(context, *, question):
     ]
     response = random.choice(response_data)
     await context.send(f"Question: {question}\nAnswer: {response}")
+
+
+# deletes messages
+@bot.command()
+async def clear(context, amount=1):
+    await context.channel.purge(limit=amount+1)
+
 
 # random message replies. Works when the keyword is present in any message
 # BUG: other commands stop working.
