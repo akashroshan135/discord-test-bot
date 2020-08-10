@@ -31,6 +31,18 @@ async def on_member_remove(member):
     print(f'{member} got yeeted!')
     #await channel.send(f'{member} got yeeted!')
 
+# kicks a member
+@client.command()
+async def kick(context, member : discord.Member, *, reason=None):
+    await member.kick(reason=reason)
+    await context.send(f'{member.mention} has been kicked from the server')
+
+# bans a member
+@client.command()
+async def ban(context, member : discord.Member, *, reason=None):
+    await member.ban(reason=reason)
+    await context.send(f'{member.mention} has been banned from the server')
+
 
 # simple message replies
 @client.command()
