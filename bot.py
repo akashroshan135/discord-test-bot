@@ -13,12 +13,6 @@ from discord.ext import commands
 client = commands.Bot(command_prefix = '.')
 
 
-# runs when the bot is running
-@client.event
-async def on_ready():
-    print('Bot is ready to roll!')
-
-
 # terminal message on member join
 @client.event
 async def on_member_join(member):
@@ -52,10 +46,6 @@ async def ding(context):
 @client.command()
 async def king(context):
     await context.send('Kong!')
-
-@client.command()
-async def ping(context):
-    await context.send(f'Bot ping is {round(client.latency * 1000)}ms!')
 
 
 # random message replies (8ball)
@@ -93,6 +83,24 @@ async def clear(context, amount=1):
     await context.channel.purge(limit=amount+1)
 
 
+# cogs demo
+@client.command()
+async def load(context, extension):
+    client.load_extension(f'cogs.{extension}')
+    print(f'{extension} cog has been loaded')
+
+@client.command()
+async def unload(context, extension):
+    client.unload_extension(f'cogs.{extension}')
+    print(f'{extension} cog has been unloaded')
+    
+@client.command()
+async def reload(context, extension):
+    client.unload_extension(f'cogs.{extension}')
+    client.load_extension(f'cogs.{extension}')
+    print(f'{extension} cog has been reloaded')
+
+
 # random message replies. Works when the keyword is present in any message
 # BUG: other commands stop working.
 """
@@ -111,5 +119,10 @@ async def on_message(message):
         response = random.choice(test_data)
         await message.channel.send(response)
 """
+
+
+for filename in os.listdir('./cogs'):
+    if filename.endswith('.py'):
+        client.load_extension(f'cogs.{filename[:-3]}')
 
 client.run(token)
