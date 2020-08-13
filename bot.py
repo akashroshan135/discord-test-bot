@@ -16,7 +16,7 @@ client = commands.Bot(command_prefix = '.')
 # terminal message on member join
 @client.event
 async def on_member_join(member):
-    print(f'{member} has joined')
+    print(f'{member} has joined the server')
     #await channel.send(f'{member} has entered hell!')
 
 # terminal message on member remove
@@ -79,8 +79,9 @@ async def _8ball(context, *, question):
 
 # deletes messages
 @client.command()
-async def clear(context, amount=1):
-    await context.channel.purge(limit=amount+1)
+async def purge(context, amount=1, *, reason='chuma'):
+    deleted = await context.channel.purge(limit=amount+1)
+    await context.send(f'Deleted {amount} message(s)\nReason: {reason}')
 
 
 # cogs demo
@@ -88,17 +89,20 @@ async def clear(context, amount=1):
 async def load(context, extension):
     client.load_extension(f'cogs.{extension}')
     print(f'{extension} cog has been loaded')
+    await context.send(f'{extension} cog has been loaded')
 
 @client.command()
 async def unload(context, extension):
     client.unload_extension(f'cogs.{extension}')
     print(f'{extension} cog has been unloaded')
-    
+    await context.send(f'{extension} cog has been unloaded')
+
 @client.command()
 async def reload(context, extension):
     client.unload_extension(f'cogs.{extension}')
     client.load_extension(f'cogs.{extension}')
     print(f'{extension} cog has been reloaded')
+    await context.send(f'{extension} cog has been reloaded')
 
 
 # random message replies. Works when the keyword is present in any message
