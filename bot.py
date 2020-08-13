@@ -106,8 +106,6 @@ async def reload(context, extension):
 
 
 # random message replies. Works when the keyword is present in any message
-# BUG: other commands stop working.
-"""
 @client.event
 async def on_message(message):
     if message.author == client.user:
@@ -122,7 +120,7 @@ async def on_message(message):
     if 'bot' in message.content.lower():
         response = random.choice(test_data)
         await message.channel.send(response)
-"""
+    await client.process_commands(message)
 
 
 for filename in os.listdir('./cogs'):
