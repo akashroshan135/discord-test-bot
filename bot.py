@@ -17,13 +17,15 @@ client = commands.Bot(command_prefix = '.')
 @client.event
 async def on_member_join(member):
     print(f'{member} has joined the server')
-    #await channel.send(f'{member} has entered hell!')
+    channel = discord.utils.get(member.guild.channels, name="general")
+    await channel.send(f'Welcome to the server, {member.mention}')
 
 # terminal message on member remove
 @client.event
 async def on_member_remove(member):
     print(f'{member} got yeeted!')
-    #await channel.send(f'{member} got yeeted!')
+    channel = discord.utils.get(member.guild.channels, name="general")
+    await channel.send(f'I thought we were friends, {member.mention}?')
 
 # kicks a member
 @client.command()
@@ -42,6 +44,9 @@ async def ban(context, member : discord.Member, *, reason=None):
 @client.command()
 async def ding(context):
     await context.send('Dong!')
+    # logs in a specific channel
+    log_channel = discord.utils.get(context.guild.channels, name="bot-log")
+    await log_channel.send(f'{context.message.author.mention} used ding')
 
 @client.command()
 async def king(context):
@@ -121,6 +126,14 @@ async def on_message(message):
         response = random.choice(test_data)
         await message.channel.send(response)
     await client.process_commands(message)
+
+
+@client.command()
+async def users(context):
+    # send members count
+    await context.send(f'No of members: {context.guild.member_count}\n')
+    # send members count excluding bots
+    await context.send(f'No of true members: {len([m for m in context.guild.members if not m.bot])}')
 
 
 for filename in os.listdir('./cogs'):
