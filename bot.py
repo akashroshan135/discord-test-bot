@@ -44,13 +44,16 @@ async def ban(context, member : discord.Member, *, reason=None):
 @client.command()
 async def ding(context):
     await context.send('Dong!')
-    # logs in a specific channel
-    log_channel = discord.utils.get(context.guild.channels, name="bot-log")
-    await log_channel.send(f'{context.message.author.mention} used ding')
+    await botlog(context, 'ding')
 
 @client.command()
 async def king(context):
     await context.send('Kong!')
+
+
+async def botlog(context, command):
+    log_channel = discord.utils.get(context.guild.channels, name="bot-log")
+    await log_channel.send(f'{context.message.author.mention} used {command}')
 
 
 # random message replies (8ball)
@@ -134,6 +137,13 @@ async def users(context):
     await context.send(f'No of members: {context.guild.member_count}\n')
     # send members count excluding bots
     await context.send(f'No of true members: {len([m for m in context.guild.members if not m.bot])}')
+
+@client.command()
+async def update(context):
+    categories = discord.utils.get(context.guild.categories, name="server stat")
+    voice = discord.utils.get(context.guild.voice_channels, name=str(categories.voice_channels[0])) # Get the first voice_channel in this category
+    update = "Member count: " + str(context.guild.member_count) 
+    await voice.edit(name=update) # Edit voice channel
 
 
 for filename in os.listdir('./cogs'):
